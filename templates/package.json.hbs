@@ -1,0 +1,17 @@
+{
+  "name": "{{ projectDir }}",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    {{#if devServer}}
+    "serve": "webpack-dev-server",
+    {{/if}}
+    "build": "npm run prod",
+    "prod": "webpack --mode production",
+    "dev": "webpack --mode development"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
