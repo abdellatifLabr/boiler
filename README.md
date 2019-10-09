@@ -1,19 +1,12 @@
 # Boiler
-
 Project boilerplate generator with **Webpack**.
 
-
-
 ## Install
-
 ```bash
-$ npm install -g boiler
+$ npm install -g @tifo18/boiler
 ```
 
-
-
 ## Usage
-
 ```bash
 $ boiler --help
 Usage: app [options]
@@ -33,10 +26,7 @@ Options:
   -h, --help                   output usage information
 ```
 
-
-
 ## Example
-
 ```bash
 $ boiler -d myproject --ts --html --scss --dev-server
 CREATE myproject\webpack.config.js                
@@ -49,8 +39,5 @@ CREATE myproject\package.json
 > [========================================] 100% | ETA: 0s | 11/11
 ```
 
-
-
 ## License
-
 **Boiler** is freely distributable under the terms of the [MIT License](https://github.com/labTifo/boiler/blob/master/LICENSE).
