@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const path = require('path');
 const fs = require('fs');
 const clc = require('cli-color');
@@ -19,7 +21,8 @@ const context = { projectDir, entries, scripting, styling, templating, purgeCss,
 
 /* Creating project structure */
 if (fs.existsSync(projectDir)) {
-    console.log('Project directory already exists.');
+    console.log(clc.yellow('Project directory already exists.'));
+    process.exit();
 } else {
     if (projectDir != '.') {
         fs.mkdirSync(projectDir);
@@ -29,12 +32,12 @@ if (fs.existsSync(projectDir)) {
     fs.mkdirSync(path.join(projectDir, 'dist'));
 }
 
-/* Write config file */
+/* Write webpack.config.js file */
 const wpConfigDir = path.join(projectDir, 'webpack.config.js');
 console.log(clc.green('CREATE'), wpConfigDir);
 fs.writeFileSync(
     wpConfigDir, 
-    render('../lib/templates/webpack.config.js.hbs', context)
+    render(path.join(__dirname, '../lib/templates/webpack.config.js.hbs'), context)
 );
 
 /* Create entry module */
@@ -44,7 +47,7 @@ for (let entrie of entries) {
     console.log(clc.green('CREATE'), script);
     fs.writeFileSync(
         script,
-        render('../lib/templates/script.hbs', { ...context, entrie })
+        render(path.join(__dirname, '../lib/templates/script.hbs'), { ...context, entrie })
     );
 }
 if (scripting == 'ts') {
@@ -53,7 +56,7 @@ if (scripting == 'ts') {
     console.log(clc.green('CREATE'), tsConfigDir);
     fs.writeFileSync(
         tsConfigDir,
-        render('../lib/templates/tsconfig.json.hbs', {})
+        render(path.join(__dirname, '../lib/templates/tsconfig.json.hbs'), {})
     );
 }
 
@@ -71,7 +74,7 @@ const templatesDir = path.join(projectDir, `src/index.${templating}`);
 console.log(clc.green('CREATE'), templatesDir);
 fs.writeFileSync(
     templatesDir, 
-    render('../lib/templates/index.hbs', context)    
+    render(path.join(__dirname, '../lib/templates/index.hbs'), context)    
 );
 
 /* Write package.json file */
@@ -79,7 +82,7 @@ const pkgJsonDir = path.join(projectDir, 'package.json');
 console.log(clc.green('CREATE'), pkgJsonDir);
 fs.writeFileSync(
     pkgJsonDir,
-    render('../lib/templates/package.json.hbs', context)
+    render(path.join(__dirname, '../lib/templates/package.json.hbs'), context)
 );
 
 /* Filtering & installing dependencies */
@@ -106,25 +109,27 @@ const dependencies = [
     if (!devServer && dep == 'webpack-dev-server') return false;
     return true;
 });
-console.log(dependencies);
-process.exit()
+
 (async function () {
     process.chdir(projectDir);
-    console.log('> npm install');
+    console.log('>', clc.blue('npm install'), '\r');
     progressBar.start(dependencies.length, 0);
     for (let [i, dep] of dependencies.entries()) {
         await cmd(`npm install -D ${dep}`);
         progressBar.update(i+1);
     }
     progressBar.stop();
+
+    /* Initialize a git repository */
     if (git) {
-        console.log('> git init');
+        console.log('>', clc.blue('git init'));
         await cmd('git init');
-        fs.copyFileSync('../lib/templates/.gitignore', '.gitignore');
+        const gitignorePath = path.join(projectDir, '.gitignore')
+        console.log(clc.green('CREATE'), gitignorePath);
+        fs.copyFileSync(
+            path.join(__dirname, '../lib/templates/.gitignore'),
+            '.gitignore'
+        );
         fs.writeFileSync('src/assets/.gitkeep', '');
     }
 })();
-
-/*
-    * bin files https://medium.com/@thatisuday/creating-cli-executable-global-npm-module-5ef734febe32
-*/
