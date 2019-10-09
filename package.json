@@ -1,16 +1,21 @@
 {
-  "name": "boiler",
+  "name": "@tifo18/boiler",
   "version": "1.0.0",
+  "description": "Project boilerplate generator with webpack",
   "main": "index.js",
   "bin": {
     "boiler": "./bin/app.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/labTifo/boiler"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["build", "boilerplate", "setup", "html", "pug", "css", "scss", "ts", "js"],
+  "author": "Labreche Abdellatif",
+  "license": "MIT",
   "dependencies": {
     "cli-color": "^1.4.0",
     "cli-progress": "^3.3.1",
@@ -19,6 +24,5 @@
   },
   "directories": {
     "test": "test"
-  },
-  "description": ""
+  }
 }
