@@ -16,7 +16,21 @@ $ npm install -g boiler
 
 ```bash
 $ boiler --help
-Usage: app [options]                                                                                                                                                             Options:                                                                                   -d, --directory <directory>  Project creation directory                                 -e, --entries <entries>      Project entry files names                                   --js                         Set scripting language to Javascript                       --ts                         Set scripting language to Typescript                       --html                       Set templating language to HTML                             --pug                        Set templating language to PUG (HTML preprocessor)         --css                        Set styling language to CSS                                 --scss                       Set styling language to SCSS/SASS                           --purge-css                  Enable purge-css plugin (get rid of unused css styles)     --dev-server                 Enable development live server                             --git                        Initialize a git repository with a custom .gitignore file   -h, --help                   output usage information
+Usage: app [options]
+
+Options:
+  -d, --directory <directory>  Project creation directory
+  -e, --entries <entries>      Project entry files names
+  --js                         Set scripting language to Javascript
+  --ts                         Set scripting language to Typescript
+  --html                       Set templating language to HTML
+  --pug                        Set templating language to PUG (HTML preprocessor)
+  --css                        Set styling language to CSS
+  --scss                       Set styling language to SCSS/SASS
+  --purge-css                  Enable purge-css plugin (get rid of unused css styles)
+  --dev-server                 Enable development live server
+  --git                        Initialize a git repository with a custom .gitignore file
+  -h, --help                   output usage information
 ```
 
 
@@ -25,7 +39,14 @@ Usage: app [options]                                                            
 
 ```bash
 $ boiler -d myproject --ts --html --scss --dev-server
-CREATE myproject\webpack.config.js                                                        CREATE myproject\src\ts\main.ts                                                          CREATE myproject\tsconfig.json                                                            CREATE myproject\src\scss\styles.scss                                                    CREATE myproject\src\index.html                                                          CREATE myproject\package.json                                                            > npm install                                                                            [========================================] 100% | ETA: 0s | 11/11
+CREATE myproject\webpack.config.js                
+CREATE myproject\src\ts\main.ts
+CREATE myproject\tsconfig.json
+CREATE myproject\src\scss\styles.scss
+CREATE myproject\src\index.html
+CREATE myproject\package.json
+> npm install
+> [========================================] 100% | ETA: 0s | 11/11
 ```
 
 
