@@ -35,8 +35,6 @@ CREATE myproject\tsconfig.json
 CREATE myproject\src\scss\styles.scss
 CREATE myproject\src\index.html
 CREATE myproject\package.json
-> npm install
-> [========================================] 100% | ETA: 0s | 11/11
 ```
 
 ## License
