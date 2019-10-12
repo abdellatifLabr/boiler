@@ -3,9 +3,9 @@
 const path = require('path');
 const fs = require('fs');
 const clc = require('cli-color');
+const request = require('sync-request');
 const cli = require('../lib/cli');
 const cmd = require('../lib/cmd');
-const progressBar = require('../lib/progress-bar');
 const { render, createDirIfNotExists } = require('../lib/utils');
 
 /* Arguments parsing */
@@ -78,14 +78,7 @@ fs.writeFileSync(
 );
 
 /* Write package.json file */
-const pkgJsonDir = path.join(projectDir, 'package.json');
-console.log(clc.green('CREATE'), pkgJsonDir);
-fs.writeFileSync(
-    pkgJsonDir,
-    render(path.join(__dirname, '../lib/templates/package.json.hbs'), context)
-);
-
-/* Filtering & installing dependencies */
+console.log(clc.green('RETRIEVE'), 'Dependencie:version...');
 const dependencies = [
     'copy-webpack-plugin',
     'css-loader',
@@ -108,19 +101,22 @@ const dependencies = [
     if (scripting == 'js' && dep == 'typescript') return false;
     if (!devServer && dep == 'webpack-dev-server') return false;
     return true;
-});
+}).reduce((prev, curr) => {
+    const resp = request('GET', `https://registry.npmjs.org/${curr}`);
+    const version = JSON.parse(resp.getBody())['dist-tags']['latest'];
+    prev[curr] = version;
+    return prev;
+}, {});
+const pkgJsonDir = path.join(projectDir, 'package.json');
+console.log(clc.green('CREATE'), pkgJsonDir);
+fs.writeFileSync(
+    pkgJsonDir,
+    render(path.join(__dirname, '../lib/templates/package.json.hbs'), { ...context, dependencies })
+);
 
+/* Initialize a git repository */
 (async function () {
     process.chdir(projectDir);
-    console.log('>', clc.blue('npm install'), '\r');
-    progressBar.start(dependencies.length, 0);
-    for (let [i, dep] of dependencies.entries()) {
-        await cmd(`npm install -D ${dep}`);
-        progressBar.update(i+1);
-    }
-    progressBar.stop();
-
-    /* Initialize a git repository */
     if (git) {
         console.log('>', clc.blue('git init'));
         await cmd('git init');

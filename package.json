@@ -13,14 +13,24 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["build", "boilerplate", "setup", "html", "pug", "css", "scss", "ts", "js"],
+  "keywords": [
+    "build",
+    "boilerplate",
+    "setup",
+    "html",
+    "pug",
+    "css",
+    "scss",
+    "ts",
+    "js"
+  ],
   "author": "Labreche Abdellatif",
   "license": "MIT",
   "dependencies": {
     "cli-color": "^1.4.0",
-    "cli-progress": "^3.3.1",
     "commander": "^3.0.2",
-    "handlebars": "^4.4.2"
+    "handlebars": "^4.4.2",
+    "sync-request": "^6.1.0"
   },
   "directories": {
     "test": "test"
