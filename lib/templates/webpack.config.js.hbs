@@ -21,7 +21,7 @@ module.exports = {
             { test: /\.pug$/, use: 'pug-html-loader' },
             {{/if_eq}}
             {
-                {{#if_eq styling 'sass'}}
+                {{#if_eq styling 'scss'}}
                 test: /\.(css|scss|sass)$/,
                 {{else}}
                 test: /\.css$/,
