@@ -1,6 +1,6 @@
 {
   "name": "@tifo18/boiler",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Project boilerplate generator with webpack",
   "main": "index.js",
   "bin": {
