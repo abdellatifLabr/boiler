@@ -129,3 +129,5 @@ fs.writeFileSync(
         fs.writeFileSync('src/assets/.gitkeep', '');
     }
 })();
+
+console.log('😊 Don\'t forget to run', clc.blue('npm install'));
