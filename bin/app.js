@@ -20,17 +20,12 @@ const git = cli.git;
 const context = { projectDir, entries, scripting, styling, templating, purgeCss, devServer };
 
 /* Creating project structure */
-if (fs.existsSync(projectDir)) {
-    console.log(clc.yellow('Project directory already exists.'));
-    process.exit();
-} else {
-    if (projectDir != '.') {
-        fs.mkdirSync(projectDir);
-    }
-    fs.mkdirSync(path.join(projectDir, 'src'));
-    fs.mkdirSync(path.join(projectDir, 'src', 'assets'));
-    fs.mkdirSync(path.join(projectDir, 'dist'));
+if (projectDir != '.') {
+    fs.mkdirSync(projectDir);
 }
+fs.mkdirSync(path.join(projectDir, 'src'));
+fs.mkdirSync(path.join(projectDir, 'src', 'assets'));
+fs.mkdirSync(path.join(projectDir, 'dist'));
 
 /* Write webpack.config.js file */
 const wpConfigDir = path.join(projectDir, 'webpack.config.js');
