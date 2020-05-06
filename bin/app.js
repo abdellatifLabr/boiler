@@ -25,7 +25,6 @@ if (projectDir != '.') {
 }
 fs.mkdirSync(path.join(projectDir, 'src'));
 fs.mkdirSync(path.join(projectDir, 'src', 'assets'));
-fs.mkdirSync(path.join(projectDir, 'dist'));
 
 /* Write webpack.config.js file */
 const wpConfigDir = path.join(projectDir, 'webpack.config.js');
