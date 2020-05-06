@@ -74,7 +74,7 @@ const templatesDir = path.join(projectDir, `src/index.${templating}`);
 console.log(clc.green('CREATE'), templatesDir);
 fs.writeFileSync(
     templatesDir, 
-    render(path.join(__dirname, '../lib/templates/index.hbs'), context)    
+    render(path.join(__dirname, '../lib/templates/index.html.hbs'), context)    
 );
 
 /* Write package.json file */
