@@ -15,9 +15,8 @@ const scripting = (cli.js) ? 'js' : 'ts';
 const templating = (cli.html) ? 'html' : 'pug';
 const styling = (cli.css) ? 'css' : 'scss';
 const purgeCss = cli.purgeCss;
-const devServer = cli.devServer;
 const git = cli.git;
-const context = { projectDir, entries, scripting, styling, templating, purgeCss, devServer };
+const context = { projectDir, entries, scripting, styling, templating, purgeCss };
 
 /* Creating project structure */
 if (projectDir != '.') {
@@ -36,12 +35,12 @@ fs.writeFileSync(
 
 /* Create entry module */
 createDirIfNotExists(path.join(projectDir, `src/${scripting}`));
-for (let entrie of entries) {
-    const script = path.join(projectDir, `src/${scripting}/${entrie}.${scripting}`);
+for (let entry of entries) {
+    const script = path.join(projectDir, `src/${scripting}/${entry}.${scripting}`);
     console.log(clc.green('CREATE'), script);
     fs.writeFileSync(
         script,
-        render(path.join(__dirname, '../lib/templates/script.hbs'), { ...context, entrie })
+        render(path.join(__dirname, '../lib/templates/script.hbs'), { ...context, entry })
     );
 }
 if (scripting == 'ts') {
@@ -63,7 +62,7 @@ fs.writeFileSync(
     '/* Main Styles File */'
 );
 
-/* Create tempaltes files */
+/* Create templates files */
 const templatesDir = path.join(projectDir, `src/index.${templating}`);
 console.log(clc.green('CREATE'), templatesDir);
 fs.writeFileSync(
@@ -73,29 +72,22 @@ fs.writeFileSync(
 
 /* Write package.json file */
 console.log(clc.green('RETRIEVE'), 'Dependencie:version...');
+const dependenciesTree = {
+    'default': ['webpack', 'webpack-cli', 'copy-webpack-plugin', 'webpack-dev-server'],
+    'html': ['html-webpack-plugin'],
+    'pug': ['html-webpack-plugin', 'pug-html-loader'],
+    'css': ['css-loader', 'style-loader'],
+    'scss': ['css-loader', 'style-loader', 'node-sass', 'sass-loader'],
+    'js': [],
+    'ts': ['typescript', 'ts-loader']
+};
 const dependencies = [
-    'copy-webpack-plugin',
-    'css-loader',
-    'html-webpack-plugin',
-    'pug-html-loader',
-    'node-sass',
-    'sass-loader',
-    'style-loader',
-    '@fullhuman/purgecss-loader',
-    'ts-loader',
-    'webpack',
-    'webpack-dev-server',
-    'webpack-cli',
-    'typescript'
-].filter(dep => {
-    if (styling == 'css' && (dep == 'sass-loader' || dep == 'node-sass')) return false;
-    if (!purgeCss && dep == '@fullhuman/purgecss-loader') return false;
-    if (templating == 'html' && dep == 'pug-html-loader') return false;
-    if (scripting == 'js' && dep == 'ts-loader') return false;
-    if (scripting == 'js' && dep == 'typescript') return false;
-    if (!devServer && dep == 'webpack-dev-server') return false;
-    return true;
-}).reduce((prev, curr) => {
+    ...dependenciesTree['default'],
+    ...dependenciesTree[templating],
+    ...dependenciesTree[styling],
+    ...dependenciesTree[scripting],
+    (purgeCss) ? '@fullhuman/purgecss-loader' : null
+].reduce((prev, curr) => {
     const resp = request('GET', `https://registry.npmjs.org/${curr}`);
     const version = JSON.parse(resp.getBody())['dist-tags']['latest'];
     prev[curr] = version;
@@ -107,6 +99,7 @@ fs.writeFileSync(
     pkgJsonDir,
     render(path.join(__dirname, '../lib/templates/package.json.hbs'), { ...context, dependencies })
 );
+console.log('😊 Don\'t forget to run', clc.blue('npm install'));
 
 /* Initialize a git repository */
 (async function () {
@@ -123,5 +116,3 @@ fs.writeFileSync(
         fs.writeFileSync('src/assets/.gitkeep', '');
     }
 })();
-
-console.log('😊 Don\'t forget to run', clc.blue('npm install'));
