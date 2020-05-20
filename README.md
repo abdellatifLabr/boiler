@@ -13,7 +13,7 @@ Usage: app [options]
 
 Options:
   -d, --directory <directory>  Project creation directory
-  -e, --entries <entries>      Project entry files names
+  -e, --entries <entries>      Project entry files names, default: main
   --js                         Set scripting language to Javascript
   --ts                         Set scripting language to Typescript
   --html                       Set templating language to HTML
@@ -28,13 +28,17 @@ Options:
 
 ## Example
 ```bash
-$ boiler -d myproject --ts --html --scss --dev-server
-CREATE myproject\webpack.config.js                
-CREATE myproject\src\ts\main.ts
-CREATE myproject\tsconfig.json
-CREATE myproject\src\scss\styles.scss
-CREATE myproject\src\index.html
-CREATE myproject\package.json
+$ boiler -d example --html --scss --ts --purge-css --git
+CREATE example\webpack.config.js
+CREATE example\src\ts\main.ts
+CREATE example\tsconfig.json
+CREATE example\src\scss\styles.scss
+CREATE example\src\index.html
+RETRIEVE Dependencie:version...
+CREATE example\package.json
+😊 Don't forget to run npm install
+> git init
+CREATE example\.gitignore
 ```
 
 ## License
