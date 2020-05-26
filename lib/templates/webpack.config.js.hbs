@@ -55,12 +55,11 @@ module.exports = {
             template: './src/index.{{ templating }}' ,
             inject: false
         }),
-        new CopyWebpackPlugin([
-            {
-                from: 'src/assets',
-                to: 'assets'
-            }
-        ])
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: 'src/assets', to: 'assets' }
+            ]
+        })
     ],
     devServer: {
         contentBase: path.resolve(__dirname, 'src'),
