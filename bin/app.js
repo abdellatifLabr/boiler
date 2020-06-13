@@ -73,7 +73,7 @@ fs.writeFileSync(
 /* Write package.json file */
 console.log(clc.green('RETRIEVE'), 'Dependencie:version...');
 const dependenciesTree = {
-    'default': ['webpack', 'webpack-cli', 'copy-webpack-plugin', 'webpack-dev-server'],
+    'default': ['webpack', 'webpack-cli', 'copy-webpack-plugin', 'webpack-dev-server', 'file-loader'],
     'html': ['html-webpack-plugin'],
     'pug': ['html-webpack-plugin', 'pug-html-loader'],
     'css': ['css-loader', 'style-loader'],
