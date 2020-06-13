@@ -87,7 +87,9 @@ const dependencies = [
     ...dependenciesTree[styling],
     ...dependenciesTree[scripting],
     (purgeCss) ? '@fullhuman/purgecss-loader' : null
-].reduce((prev, curr) => {
+]
+.filter(dep => !!dep)
+.reduce((prev, curr) => {
     const resp = request('GET', `https://registry.npmjs.org/${curr}`);
     const version = JSON.parse(resp.getBody())['dist-tags']['latest'];
     prev[curr] = version;
