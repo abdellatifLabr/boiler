@@ -24,6 +24,7 @@ if (projectDir != '.') {
 }
 fs.mkdirSync(path.join(projectDir, 'src'));
 fs.mkdirSync(path.join(projectDir, 'src', 'assets'));
+fs.writeFileSync(path.join(projectDir, 'src', 'assets', '.gitkeep'), '');
 
 /* Write webpack.config.js file */
 const wpConfigDir = path.join(projectDir, 'webpack.config.js');
@@ -115,6 +116,5 @@ console.log('😊 Don\'t forget to run', clc.blue('npm install'));
             path.join(__dirname, '../lib/templates/.gitignore'),
             '.gitignore'
         );
-        fs.writeFileSync('src/assets/.gitkeep', '');
     }
 })();
