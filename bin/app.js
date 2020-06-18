@@ -36,14 +36,14 @@ fs.writeFileSync(
 
 /* Create entry module */
 createDirIfNotExists(path.join(projectDir, `src/${scripting}`));
-for (let entry of entries) {
+entries.forEach((entry, entryNum) => {
     const script = path.join(projectDir, `src/${scripting}/${entry}.${scripting}`);
     console.log(clc.green('CREATE'), script);
     fs.writeFileSync(
         script,
-        render(path.join(__dirname, '../lib/templates/script.hbs'), { ...context, entry })
+        render(path.join(__dirname, '../lib/templates/script.hbs'), { ...context, entry, entryNum })
     );
-}
+});
 if (scripting == 'ts') {
     /* Generate tsconfig.json file */
     const tsConfigDir = path.join(projectDir, 'tsconfig.json');
