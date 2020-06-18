@@ -21,7 +21,6 @@ Options:
   --css                        Set styling language to CSS
   --scss                       Set styling language to SCSS/SASS
   --purge-css                  Enable purge-css plugin (get rid of unused css styles)
-  --dev-server                 Enable development live server
   --git                        Initialize a git repository with a custom .gitignore file
   -h, --help                   output usage information
 ```
